@@ -1,0 +1,380 @@
+---
+import '../styles/global.css'
+---
+
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TryFlama — Empresa de desarrollo web, apps y fullstack. Creamos tecnología que enciende tu proyecto." />
+  <meta property="og:image" content="foto.png" />
+  <title>TryFlama — Desarrollo Web, Apps y Fullstack</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <script type="text/javascript" src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+  
+
+  <style is:global>
+    .bg-grid {
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .glow-red { box-shadow: 0 0 0 1px rgba(255, 30, 60, 0.25), 0 30px 60px -18px rgba(255, 30, 60, 0.35); }
+    .card-dark { background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); border: 1px solid rgba(255,255,255,0.08); }
+    .card-dark:hover { border-color: rgba(255, 30, 60, 0.45); box-shadow: 0 18px 50px -16px rgba(255, 30, 60, 0.28); }
+    .fade-up { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.in { opacity: 1; transform: none; }
+    .tab-link { position: relative; }
+    .tab-link::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+      background: linear-gradient(90deg, #ff1e3c, #ff3b57); border-radius: 2px;
+      transform: scaleX(0); transform-origin: left; transition: transform .25s ease;
+    }
+    .tab-link:hover::after, .tab-link.active::after { transform: scaleX(1); }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #070709; }
+    ::-webkit-scrollbar-thumb { background: #2a2a30; border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: #ff1e3c; }
+  </style>
+</head>
+
+<body class="bg-ink-950 text-slate-200 font-sans antialiased overflow-x-hidden">
+
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-ink-950/80 backdrop-blur-xl">
+    <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-8">
+      <a href="/" class="flex items-center gap-2.5">
+        <img src="https://cdn.discordapp.com/icons/1517639099039613028/9b41f5a8b69034399b4fa55a4c317623.webp?size=256"
+             alt="Logo de TryFlama" class="h-9 w-9 rounded-lg object-cover shadow-lg shadow-flame-500/40" />
+        <span class="font-display text-xl font-bold tracking-tight text-white">Try<span class="text-flame-500">Flama</span></span>
+      </a>
+
+      <div class="hidden items-center gap-7 lg:flex">
+        <a href="/" data-tab-link="inicio" class="tab-link active text-sm font-semibold text-white">Inicio</a>
+        <a href="susic" target="_blank" rel="noopener" class="tab-link text-sm font-semibold text-slate-300 transition hover:text-white">Susic</a>
+        <a href="anna" target="_blank" rel="noopener" class="tab-link text-sm font-semibold text-slate-300 transition hover:text-white">Anna</a>
+        <a href="skyloading" target="_blank" rel="noopener" class="tab-link text-sm font-semibold text-slate-300 transition hover:text-white">SkyLoading</a>
+        <a href="#contacto" data-tab-link="contacto" class="tab-link text-sm font-semibold text-slate-300 transition hover:text-white">Contacto</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="https://discord.gg/YJ3aueX2Sp" target="_blank" rel="noopener"
+           class="hidden items-center gap-2 rounded-lg bg-flame-500 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-flame-500/30 transition hover:bg-flame-600 hover:shadow-flame-500/50 sm:inline-flex">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3c-.2.4-.5.9-.6 1.3a18.3 18.3 0 0 0-5.5 0C9.1 3.9 8.8 3.4 8.6 3a19.7 19.7 0 0 0-4.9 1.4C.9 8.4.2 12.3.6 16.2A20 20 0 0 0 6 19.2c.5-.7 1-1.4 1.4-2.1-.8-.3-1.5-.7-2.2-1.2l.5-.4a14.3 14.3 0 0 0 12 0l.5.4c-.7.5-1.4.9-2.2 1.2.4.7.9 1.4 1.4 2.1a19.9 19.9 0 0 0 5.4-3c.4-4.5-.7-8.3-2.9-11.8ZM8.7 14c-.9 0-1.7-.8-1.7-1.9 0-1 .7-1.9 1.7-1.9s1.7.8 1.7 1.9c0 1-.8 1.9-1.7 1.9Zm6.6 0c-.9 0-1.7-.8-1.7-1.9 0-1 .7-1.9 1.7-1.9s1.7.8 1.7 1.9c0 1-.7 1.9-1.7 1.9Z"/></svg>
+          Discord
+        </a>
+        <button id="menu-btn" class="rounded-lg border border-white/10 p-2 text-white lg:hidden" aria-label="Abrir menú">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobile-menu" class="hidden border-t border-white/5 bg-ink-900 px-5 py-4 lg:hidden">
+      <div class="flex flex-col gap-4">
+        <a href="/" data-tab-link="inicio" class="font-semibold text-white">Inicio</a>
+        <a href="susic" target="_blank" rel="noopener" class="font-semibold text-slate-300">Susic</a>
+        <a href="anna" target="_blank" rel="noopener" class="font-semibold text-slate-300">Anna</a>
+        <a href="skyloading" target="_blank" rel="noopener" class="font-semibold text-slate-300">SkyLoading</a>
+        <a href="#contacto" data-tab-link="contacto" class="font-semibold text-slate-300">Contacto</a>
+        <a href="https://discord.gg/YJ3aueX2Sp" target="_blank" rel="noopener" class="inline-flex w-fit items-center gap-2 rounded-lg bg-flame-500 px-4 py-2 text-sm font-bold text-white">Discord</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section data-panel="inicio">
+
+      <div class="relative overflow-hidden pt-28 pb-10 sm:pt-36">
+        <div class="absolute inset-0 bg-grid pointer-events-none"></div>
+        <div class="absolute -top-32 left-1/2 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-flame-600/25 blur-[130px] pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-16 h-80 w-80 rounded-full bg-flame-500/15 blur-[110px] pointer-events-none"></div>
+
+        <div class="relative mx-auto max-w-4xl px-5 text-center lg:px-8">
+          <span class="inline-flex items-center gap-2 rounded-full border border-flame-500/30 bg-flame-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-flame-300">
+            <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-flame-500"></span>
+            Web · Apps · Fullstack
+          </span>
+
+          <h1 class="mt-6 font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl">
+            Creamos tecnología que<br class="hidden sm:block" />
+            <span class="bg-gradient-to-r from-flame-400 via-flame-500 to-flame-600 bg-clip-text text-transparent">enciende tu proyecto</span>
+          </h1>
+
+          <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-400 sm:text-xl">
+            En <strong class="font-semibold text-white">TryFlama</strong> desarrollamos webs, apps y soluciones fullstack
+            de vanguardia. No seguimos el ritmo: lo marcamos.
+          </p>
+
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <a href="#resenas" class="rounded-xl bg-flame-500 px-7 py-3.5 text-sm font-bold text-white shadow-xl shadow-flame-500/30 transition hover:-translate-y-0.5 hover:bg-flame-600">
+              Ver reseñas
+            </a>
+            <a href="https://discord.gg/YJ3aueX2Sp" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-7 py-3.5 text-sm font-bold text-white transition hover:border-flame-500/40 hover:bg-white/10">
+              <svg class="h-4 w-4 text-flame-400" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3c-.2.4-.5.9-.6 1.3a18.3 18.3 0 0 0-5.5 0C9.1 3.9 8.8 3.4 8.6 3a19.7 19.7 0 0 0-4.9 1.4C.9 8.4.2 12.3.6 16.2A20 20 0 0 0 6 19.2c.5-.7 1-1.4 1.4-2.1-.8-.3-1.5-.7-2.2-1.2l.5-.4a14.3 14.3 0 0 0 12 0l.5.4c-.7.5-1.4.9-2.2 1.2.4.7.9 1.4 1.4 2.1a19.9 19.9 0 0 0 5.4-3c.4-4.5-.7-8.3-2.9-11.8ZM8.7 14c-.9 0-1.7-.8-1.7-1.9 0-1 .7-1.9 1.7-1.9s1.7.8 1.7 1.9c0 1-.8 1.9-1.7 1.9Zm6.6 0c-.9 0-1.7-.8-1.7-1.9 0-1 .7-1.9 1.7-1.9s1.7.8 1.7 1.9c0 1-.7 1.9-1.7 1.9Z"/></svg>
+              Unirte al Discord
+            </a>
+          </div>
+
+          <div class="mx-auto mt-14 grid max-w-2xl grid-cols-3 gap-6 border-t border-white/5 pt-8">
+            <div>
+              <p class="font-display text-2xl font-bold text-white sm:text-3xl">3+</p>
+              <p class="mt-1 text-xs uppercase tracking-widest text-slate-500">Proyectos estrella</p>
+            </div>
+            <div>
+              <p class="font-display text-2xl font-bold text-white sm:text-3xl">24/7</p>
+              <p class="mt-1 text-xs uppercase tracking-widest text-slate-500">Soporte y soporte</p>
+            </div>
+            <div>
+              <p class="font-display text-2xl font-bold text-white sm:text-3xl">100%</p>
+              <p class="mt-1 text-xs uppercase tracking-widest text-slate-500">Dedicación</p>
+            </div>
+          </div>
+
+          <div class="mx-auto mt-6 flex flex-wrap items-center justify-center gap-x-2 rounded-xl border border-white/10 bg-white/5 py-2 pl-5 pr-3">
+            <span class="whitespace-nowrap text-xs font-bold uppercase tracking-[0.25em] text-slate-400">
+              Nuestros clientes dicen
+            </span>
+            <div class="trustpilot-widget min-w-[200px] flex-1" data-locale="es-ES" data-template-id="5419b6ffb0d04a076446a9af"
+                 data-businessunit-id="6a7948fc06172e18ffc2c613" data-style-height="20px" data-style-width="100%"
+                 data-theme="dark">
+              <a href="https://es.trustpilot.com/review/tryflama.com" target="_blank" rel="noopener">Trustpilot</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="resenas" class="relative mx-auto max-w-7xl scroll-mt-20 px-5 pt-20 lg:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <span class="inline-flex items-center gap-2 rounded-full border border-flame-500/30 bg-flame-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-flame-300">
+            ★★★★★ Reseñas de Trustpilot
+          </span>
+          <h2 class="mt-5 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            Lo que dicen nuestros <span class="bg-gradient-to-r from-flame-400 to-flame-600 bg-clip-text text-transparent">clientes</span>
+          </h2>
+          <p class="mt-4 text-lg text-slate-400">Reseñas reales en <a href="https://www.trustpilot.com/review/tryflama.com" target="_blank" rel="noopener" class="font-semibold text-flame-400 hover:text-flame-300">Trustpilot ↗</a></p>
+        </div>
+
+        <div id="reviews-grid" class="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
+      </div>
+
+      <div class="relative mx-auto max-w-7xl px-5 pt-24 lg:px-8">
+        <div class="fade-up relative overflow-hidden rounded-3xl border border-flame-500/25 bg-gradient-to-br from-flame-600/15 via-ink-900 to-ink-900 p-10 text-center sm:p-16">
+          <div class="absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-flame-500/30 blur-[100px] pointer-events-none"></div>
+          <svg class="mx-auto h-14 w-14 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3c-.2.4-.5.9-.6 1.3a18.3 18.3 0 0 0-5.5 0C9.1 3.9 8.8 3.4 8.6 3a19.7 19.7 0 0 0-4.9 1.4C.9 8.4.2 12.3.6 16.2A20 20 0 0 0 6 19.2c.5-.7 1-1.4 1.4-2.1-.8-.3-1.5-.7-2.2-1.2l.5-.4a14.3 14.3 0 0 0 12 0l.5.4c-.7.5-1.4.9-2.2 1.2.4.7.9 1.4 1.4 2.1a19.9 19.9 0 0 0 5.4-3c.4-4.5-.7-8.3-2.9-11.8ZM8.7 14c-.9 0-1.7-.8-1.7-1.9 0-1 .7-1.9 1.7-1.9s1.7.8 1.7 1.9c0 1-.8 1.9-1.7 1.9Zm6.6 0c-.9 0-1.7-.8-1.7-1.9 0-1 .7-1.9 1.7-1.9s1.7.8 1.7 1.9c0 1-.7 1.9-1.7 1.9Z"/></svg>
+          <h2 class="mt-6 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">Únete a nuestra comunidad</h2>
+          <p class="mx-auto mt-4 max-w-xl text-lg text-slate-300">
+            Novedades, soporte directo y proyectos en desarrollo. El mejor lugar para estar al día de TryFlama.
+          </p>
+          <a href="https://discord.gg/YJ3aueX2Sp" target="_blank" rel="noopener"
+             class="mt-8 inline-flex items-center gap-2 rounded-xl bg-flame-500 px-8 py-3.5 text-sm font-bold text-white shadow-xl shadow-flame-500/40 transition hover:-translate-y-0.5 hover:bg-flame-600">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3c-.2.4-.5.9-.6 1.3a18.3 18.3 0 0 0-5.5 0C9.1 3.9 8.8 3.4 8.6 3a19.7 19.7 0 0 0-4.9 1.4C.9 8.4.2 12.3.6 16.2A20 20 0 0 0 6 19.2c.5-.7 1-1.4 1.4-2.1-.8-.3-1.5-.7-2.2-1.2l.5-.4a14.3 14.3 0 0 0 12 0l.5.4c-.7.5-1.4.9-2.2 1.2.4.7.9 1.4 1.4 2.1a19.9 19.9 0 0 0 5.4-3c.4-4.5-.7-8.3-2.9-11.8ZM8.7 14c-.9 0-1.7-.8-1.7-1.9 0-1 .7-1.9 1.7-1.9s1.7.8 1.7 1.9c0 1-.8 1.9-1.7 1.9Zm6.6 0c-.9 0-1.7-.8-1.7-1.9 0-1 .7-1.9 1.7-1.9s1.7.8 1.7 1.9c0 1-.7 1.9-1.7 1.9Z"/></svg>
+            Entrar al Discord
+          </a>
+        </div>
+      </div>
+
+      <div class="relative mx-auto max-w-7xl px-5 pt-24 lg:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <h2 class="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">Nuestros <span class="bg-gradient-to-r from-flame-400 to-flame-600 bg-clip-text text-transparent">proyectos</span></h2>
+          <p class="mt-4 text-lg text-slate-400">Haz clic en una pestaña para visitar cada proyecto.</p>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3 mb-6">
+          <a href="susic" target="_blank" rel="noopener" class="group card-dark relative overflow-hidden rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2">
+            <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-flame-400 to-flame-600 opacity-0 transition group-hover:opacity-100"></div>
+            <img src="https://susic.zraa.me/logo.png"
+                 alt="Logo de Susic" class="h-14 w-14 rounded-xl object-cover shadow-lg shadow-flame-500/30" />
+            <h3 class="mt-5 text-xl font-bold text-white">Susic</h3>
+            <p class="mt-1 text-xs font-bold uppercase tracking-widest text-flame-400">Streaming</p>
+            <p class="mt-3 text-sm leading-relaxed text-slate-400">La plataforma de streaming que conecta artistas y fans.</p>
+            <span class="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-flame-400 transition group-hover:gap-2.5">Visitar →</span>
+          </a>
+
+          <a href="anna" target="_blank" rel="noopener" class="group card-dark relative overflow-hidden rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2">
+            <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-flame-400 to-flame-600 opacity-0 transition group-hover:opacity-100"></div>
+            <img src="https://cdn.discordapp.com/avatars/1484264301819592784/316b283cb2ca2a94324a59fad13e3a9a.webp?size=256"
+                 alt="Logo de Anna" class="h-14 w-14 rounded-xl object-cover shadow-lg shadow-flame-500/30" />
+            <h3 class="mt-5 text-xl font-bold text-white">Anna</h3>
+            <p class="mt-1 text-xs font-bold uppercase tracking-widest text-flame-400">Bot de Discord</p>
+            <p class="mt-3 text-sm leading-relaxed text-slate-400">Bot de Discord con IA que revoluciona la gestión de eventos.</p>
+            <span class="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-flame-400 transition group-hover:gap-2.5">Visitar →</span>
+          </a>
+
+          <a href="skyloading" target="_blank" rel="noopener" class="group card-dark relative overflow-hidden rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2">
+            <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-flame-400 to-flame-600 opacity-0 transition group-hover:opacity-100"></div>
+            <img src="https://cdn.discordapp.com/icons/1523665618019024927/c7ee34301892b7338c07138d234bdff5.webp?size=256"
+                 alt="Logo de SkyLoading" class="h-14 w-14 rounded-xl object-cover shadow-lg shadow-flame-500/30" />
+            <h3 class="mt-5 text-xl font-bold text-white">SkyLoading</h3>
+            <p class="mt-1 text-xs font-bold uppercase tracking-widest text-flame-400">Host de Minecraft</p>
+            <p class="mt-3 text-sm leading-relaxed text-slate-400">Hosting de servidores de Minecraft rápido y confiable.</p>
+            <span class="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-flame-400 transition group-hover:gap-2.5">Visitar →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section data-panel="contacto" class="hidden min-h-screen">
+      <div class="relative overflow-hidden px-5 pb-20 pt-36 lg:px-8">
+        <div class="absolute inset-0 bg-grid pointer-events-none"></div>
+        <div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-flame-600/20 blur-[130px] pointer-events-none"></div>
+
+        <div class="relative mx-auto max-w-3xl text-center">
+          <span class="inline-flex items-center gap-2 rounded-full border border-flame-500/30 bg-flame-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-flame-300">
+            <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-flame-500"></span>
+            Contáctanos
+          </span>
+          <h1 class="mt-6 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">Hablemos de tu proyecto</h1>
+          <p class="mx-auto mt-5 max-w-xl text-lg text-slate-400">
+            ¿Tienes una idea? Escríbenos y la convertimos en realidad. Respondemos en menos de 24 horas.
+          </p>
+        </div>
+
+        <div class="relative mx-auto mt-14 grid max-w-4xl gap-6 sm:grid-cols-2">
+          <a href="mailto:support@tryflama.com" class="group card-dark flex flex-col items-start gap-4 rounded-2xl p-8 transition hover:-translate-y-1">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-flame-400 to-flame-600 text-white shadow-lg shadow-flame-500/30">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+            </div>
+            <div>
+              <h3 class="font-display text-lg font-bold text-white">Email</h3>
+              <p class="mt-1 break-all text-sm font-semibold text-flame-400 transition group-hover:text-flame-300">support@tryflama.com</p>
+            </div>
+          </a>
+
+          <a href="https://discord.gg/YJ3aueX2Sp" target="_blank" rel="noopener" class="group card-dark flex flex-col items-start gap-4 rounded-2xl p-8 transition hover:-translate-y-1">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-flame-400 to-flame-600 text-white shadow-lg shadow-flame-500/30">
+              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3c-.2.4-.5.9-.6 1.3a18.3 18.3 0 0 0-5.5 0C9.1 3.9 8.8 3.4 8.6 3a19.7 19.7 0 0 0-4.9 1.4C.9 8.4.2 12.3.6 16.2A20 20 0 0 0 6 19.2c.5-.7 1-1.4 1.4-2.1-.8-.3-1.5-.7-2.2-1.2l.5-.4a14.3 14.3 0 0 0 12 0l.5.4c-.7.5-1.4.9-2.2 1.2.4.7.9 1.4 1.4 2.1a19.9 19.9 0 0 0 5.4-3c.4-4.5-.7-8.3-2.9-11.8ZM8.7 14c-.9 0-1.7-.8-1.7-1.9 0-1 .7-1.9 1.7-1.9s1.7.8 1.7 1.9c0 1-.8 1.9-1.7 1.9Zm6.6 0c-.9 0-1.7-.8-1.7-1.9 0-1 .7-1.9 1.7-1.9s1.7.8 1.7 1.9c0 1-.7 1.9-1.7 1.9Z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-display text-lg font-bold text-white">Discord</h3>
+              <p class="mt-1 text-sm font-semibold text-flame-400 transition group-hover:text-flame-300">Unirte a la comunidad →</p>
+            </div>
+          </a>
+
+          <a href="tel:+18499193805" class="group card-dark flex flex-col items-start gap-4 rounded-2xl p-8 transition hover:-translate-y-1 sm:col-span-2">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-flame-400 to-flame-600 text-white shadow-lg shadow-flame-500/30">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-display text-lg font-bold text-white">Teléfono</h3>
+              <p class="mt-1 text-sm font-semibold text-flame-400 transition group-hover:text-flame-300">+1 (849) 919-3805</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer class="border-t border-white/5 bg-ink-900">
+    <div class="mx-auto max-w-7xl px-5 py-14 lg:px-8">
+      <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
+        <a href="/" class="flex items-center gap-2.5">
+          <img src="https://cdn.discordapp.com/icons/1517639099039613028/9b41f5a8b69034399b4fa55a4c317623.webp?size=256"
+               alt="Logo de TryFlama" class="h-9 w-9 rounded-lg object-cover shadow-lg shadow-flame-500/40" />
+          <span class="font-display text-xl font-bold tracking-tight text-white">Try<span class="text-flame-500">Flama</span></span>
+        </a>
+
+        <a href="https://github.com"><svg></svg></a>
+
+        <div class="flex items-center gap-4">
+          <a href="mailto:support@tryflama.com" class="text-sm font-bold text-flame-400 transition hover:text-flame-300">Contáctanos</a>
+          <a href="https://discord.gg/YJ3aueX2Sp" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:border-flame-500/40">
+            Discord
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-10 border-t border-white/5 pt-8 text-center text-sm text-slate-500">
+        © 2026 TryFlama · support@tryflama.com · Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+
+    const reviews = [
+      { name: 'Efrain', country: 'AR', stars: 5, date: '10 de agosto de 2026', text: 'Hola, geo, cuando abres el host? XD' },
+      { name: 'American celeste', country: 'DO', stars: 4, date: '10 de agosto de 2026', text: 'Este es un proyecto donde hacen y experimentan cosas el único defecto es skyloading pero ya lo demás 10/10' },
+      { name: 'ItzSovi', country: 'IT', stars: 5, date: '10 de agosto de 2026', text: 'Hola soy tusovideconfianza este servicio de compra y venta de femboys me sirvio bastante', reply: 'Hola buenas, ¿a qué se refiere?' },
+    ];
+
+    function stars(n: number) {
+      let s = '';
+      for (let i = 0; i < 5; i++) {
+        s += i < n
+          ? '<svg class="h-4 w-4 text-flame-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg>'
+          : '<svg class="h-4 w-4 text-slate-700" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z"/></svg>';
+      }
+      return s;
+    }
+
+    const grid = document.getElementById('reviews-grid');
+    grid!.innerHTML = reviews.map(r => `
+      <article class="fade-up card-dark flex flex-col rounded-2xl p-7">
+        <div class="flex items-center gap-1">${stars(r.stars)}</div>
+        <p class="mt-4 flex-1 text-sm leading-relaxed text-slate-300">"${r.text}"</p>
+        ${r.reply ? `
+        <div class="mt-4 rounded-xl border border-white/5 bg-ink-800 p-4">
+          <p class="text-[11px] font-bold uppercase tracking-widest text-flame-400">Respuesta de TryFlama</p>
+          <p class="mt-1.5 text-sm text-slate-300">${r.reply}</p>
+        </div>` : ''}
+        <div class="mt-6 flex items-center gap-3 border-t border-white/5 pt-5">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-[radial-gradient(circle_at_center,#ff3b57,#e6102f)] text-sm font-bold text-white">${r.name[0]}</span>
+          <div>
+            <p class="text-sm font-bold text-white">${r.name}</p>
+            <p class="text-xs text-slate-500">${r.country} · ${r.date} · Trustpilot</p>
+          </div>
+        </div>
+      </article>
+    `).join('');
+    
+    const panels = document.querySelectorAll<HTMLElement>('[data-panel]');
+    const tabLinks = document.querySelectorAll<HTMLElement>('[data-tab-link]');
+
+    function activate(tab: string) {
+      tabLinks.forEach(l => l.classList.toggle('active', l.dataset.tabLink === tab));
+      panels.forEach(p => {
+        const on = p.dataset.panel === tab;
+        p.classList.toggle('hidden', !on);
+        if (on) {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          requestAnimationFrame(() => document.querySelectorAll('.fade-up').forEach(el => el.classList.add('in')));
+        }
+      });
+      document.getElementById('mobile-menu')?.classList.add('hidden');
+    }
+
+    tabLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const tab = link.dataset.tabLink;
+        if (!tab) return;
+        e.preventDefault();
+        activate(tab);
+        history.replaceState(null, '', '#' + tab);
+      });
+    });
+
+    const menuBtn = document.getElementById('menu-btn');
+    menuBtn?.addEventListener('click', () => {
+      document.getElementById('mobile-menu')?.classList.toggle('hidden');
+    });
+
+    const hash = location.hash.replace('#', '');
+    if (hash === 'contacto') activate('contacto');
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

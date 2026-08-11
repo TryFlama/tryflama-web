@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-flame-300: #ff6b81;
+  --color-flame-400: #ff3b57;
+  --color-flame-500: #ff1e3c;
+  --color-flame-600: #e6102f;
+  --color-flame-700: #b80d27;
+
+  --color-ink-700: #18181c;
+  --color-ink-800: #111114;
+  --color-ink-900: #0a0a0c;
+  --color-ink-950: #070709;
+}

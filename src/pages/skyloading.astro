@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="refresh" content="0; url=https://discord.gg/7BNuwadd6N" />
+  <title>SkyLoading — TryFlama</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh; display: grid; place-items: center;
+      background: #070709; color: #e2e2e6;
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow: hidden;
+    }
+    .grid-bg {
+      position: fixed; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+    .glow { position: fixed; top: -30%; left: 50%; width: 30rem; height: 30rem; transform: translateX(-50%); border-radius: 50%; background: rgba(255,30,60,0.22); filter: blur(120px); }
+    .box { position: relative; text-align: center; padding: 2.5rem; }
+    .flame { width: 4rem; height: 4rem; margin: 0 auto; animation: pulse 1.1s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: .8; } }
+    h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: #fff; margin-top: 1.5rem; }
+    h1 span { color: #ff1e3c; }
+    p { margin-top: .75rem; color: #9ca3af; font-size: .95rem; }
+    .spinner { width: 2.25rem; height: 2.25rem; margin: 2rem auto 0; border: 3px solid rgba(255,255,255,0.12); border-top-color: #ff1e3c; border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    a { display: inline-block; margin-top: 1.25rem; color: #ff3b57; font-weight: 600; font-size: .9rem; text-decoration: none; }
+    a:hover { color: #ff6b81; }
+  </style>
+  <script>
+    async function main() {
+        await new Promise(resolve => setTimeout(resolve, 3500));
+
+        window.location.replace('https://discord.gg/7BNuwadd6N');
+    }   
+</script>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
+  <div class="box">
+    <img src="https://cdn.discordapp.com/icons/1523665618019024927/c7ee34301892b7338c07138d234bdff5.webp?size=256"
+         alt="Logo de SkyLoading" style="width:4rem;height:4rem;border-radius:1rem;margin:0 auto 1.25rem" />
+    <h1>Redirigiendo a <span>SkyLoading</span>…</h1>
+    <p class="text-red-500">El hosting se encuentra actualmente ausente.</p>
+    <p>El hosting de Minecraft de TryFlama</p>
+    <div class="spinner"></div>
+    <a href="https://discord.gg/7BNuwadd6N">Si no se abre automáticamente, haz clic aquí →</a>
+  </div>
+</body>
+</html>
