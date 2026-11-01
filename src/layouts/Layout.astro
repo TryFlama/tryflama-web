@@ -1,0 +1,310 @@
+---
+import '../styles/global.css'
+import Icon from '../components/Icon.astro'
+import { TABS, EMAIL, DISCORD_URL } from '../data/site'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const {
+  title = 'TryFlama — Desarrollo Web, Apps y Fullstack',
+  description = 'TryFlama diseña y desarrolla webs, aplicaciones y soluciones fullstack. Tecnología que enciende tu negocio, con soporte 24/7.',
+} = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#060507" />
+    <title>{title}</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/logos/tryflama.webp" type="image/webp" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tema oscuro forzado: no hay modo claro que mantenga el contraste del material -->
+    <meta name="color-scheme" content="dark" />
+  </head>
+
+  <body class="relative min-h-screen overflow-x-hidden font-sans antialiased">
+    <!-- Capa de fondo: aurora líquida + rejilla + grano -->
+    <div class="aurora" aria-hidden="true">
+      <span class="aurora__blob aurora__blob--a"></span>
+      <span class="aurora__blob aurora__blob--b"></span>
+      <span class="aurora__blob aurora__blob--c"></span>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-lg focus:bg-flame-600 focus:px-4 focus:py-2 focus:font-semibold focus:text-white"
+      >Saltar al contenido</a
+    >
+
+    <header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6">
+        <nav
+          class="mt-3 flex h-16 items-center justify-between rounded-2xl px-3 transition-all duration-300 sm:px-4"
+          id="nav-shell"
+          aria-label="Navegación principal"
+        >
+          <!-- Marca -->
+          <a href="#inicio" class="group flex shrink-0 items-center gap-2.5 rounded-xl px-1.5 py-1">
+            <span
+              class="brand-chip relative grid h-10 w-10 place-items-center rounded-[13px]"
+            >
+              <img
+                src="/logos/tryflama.webp"
+                alt=""
+                width="40"
+                height="40"
+                class="h-full w-full rounded-[13px] object-cover"
+              />
+            </span>
+            <span class="font-display text-lg font-bold tracking-tight text-white">
+              Try<span class="text-flame-400">Flama</span>
+            </span>
+          </a>
+
+          <!-- Pestañas de escritorio (ancla a los paneles, con scroll-spy) -->
+          <div class="hidden items-center gap-1 lg:flex" id="nav-tabs">
+            {
+              TABS.map((tab) => (
+                <a
+                  href={`#${tab.id}`}
+                  class="nav-pill rounded-full px-3.5 py-2 text-sm font-semibold text-mist-400 transition-colors duration-200 hover:text-white"
+                  data-nav={tab.id}
+                >
+                  {tab.label}
+                </a>
+              ))
+            }
+          </div>
+
+          <div class="flex shrink-0 items-center gap-2">
+            <a href="#contacto" class="btn-flame hidden !px-5 !py-2.5 !text-sm sm:inline-flex">
+              Empezar un proyecto
+            </a>
+
+            <button
+              id="menu-btn"
+              type="button"
+              class="grid h-11 w-11 place-items-center rounded-xl border border-white/12 bg-white/5 text-white transition hover:border-flame-400/50 hover:bg-white/10 lg:hidden"
+              aria-label="Abrir menú"
+              aria-expanded="false"
+              aria-controls="mobile-menu"
+            >
+              <Icon name="menu" class="h-5 w-5" id="menu-icon-open" />
+            </button>
+          </div>
+        </nav>
+
+        <!-- Menú móvil -->
+        <div
+          id="mobile-menu"
+          class="glass mt-2 hidden overflow-hidden p-3 lg:hidden"
+          role="dialog"
+          aria-label="Menú"
+        >
+          <div class="flex flex-col">
+            {
+              TABS.map((tab) => (
+                <a
+                  href={`#${tab.id}`}
+                  class="mobile-nav flex items-center gap-3 rounded-xl px-4 py-3 text-base font-semibold text-mist-300 transition hover:bg-white/5 hover:text-white"
+                >
+                  <Icon name={tab.icon} class="h-4.5 w-4.5 text-flame-400" />
+                  {tab.label}
+                </a>
+              ))
+            }
+            <a href="#contacto" class="btn-flame mt-2 w-full">Empezar un proyecto</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="contenido" class="relative z-10">
+      <slot />
+    </main>
+
+    <footer class="relative z-10 mt-20 border-t border-white/8">
+      <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+        <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
+          <a href="#inicio" class="flex items-center gap-2.5">
+            <span class="brand-chip grid h-10 w-10 place-items-center rounded-[13px]">
+              <img
+                src="/logos/tryflama.webp"
+                alt=""
+                width="40"
+                height="40"
+                class="h-full w-full rounded-[13px] object-cover"
+              />
+            </span>
+            <span class="font-display text-lg font-bold tracking-tight text-white">
+              Try<span class="text-flame-400">Flama</span>
+            </span>
+          </a>
+
+          <p class="text-center text-sm text-mist-400">Desarrollo web · Apps · Soluciones Fullstack</p>
+
+          <div class="flex items-center gap-3">
+            <a
+              href={`mailto:${EMAIL}`}
+              class="rounded-xl px-3 py-2 text-sm font-semibold text-flame-300 transition hover:text-flame-200"
+            >
+              Contacto
+            </a>
+            <a
+              href={DISCORD_URL}
+              target="_blank"
+              rel="noopener"
+              class="btn-glass !px-4 !py-2 !text-sm"
+            >
+              <Icon name="discord" class="h-4 w-4 text-flame-300" />
+              Discord
+              <span class="sr-only">(se abre en otra pestaña)</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-10 flex flex-col items-center gap-2 border-t border-white/8 pt-8 text-center">
+          <p class="text-sm text-mist-500">
+            © 2026 TryFlama. Todos los derechos reservados.
+          </p>
+          <p class="text-xs text-mist-500">
+            Hecho con foco en rendimiento y accesibilidad.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const header = document.getElementById('site-header')!
+      const navShell = document.getElementById('nav-shell')!
+      const progress = document.getElementById('read-progress')!
+      const menuBtn = document.getElementById('menu-btn')!
+      const mobileMenu = document.getElementById('mobile-menu')!
+
+      /* ---- Barra de progreso + condensación del nav ---- */
+      let ticking = false
+      const onScroll = () => {
+        if (ticking) return
+        ticking = true
+        requestAnimationFrame(() => {
+          const y = window.scrollY
+          const max = document.documentElement.scrollHeight - window.innerHeight
+          progress.style.transform = `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`
+
+          const condensed = y > 24
+          navShell.classList.toggle('glass', condensed)
+          header.dataset.condensed = condensed ? 'true' : 'false'
+          ticking = false
+        })
+      }
+      window.addEventListener('scroll', onScroll, { passive: true })
+      onScroll()
+
+      /* ---- Menú móvil accesible ---- */
+      const setMenu = (open: boolean) => {
+        mobileMenu.classList.toggle('hidden', !open)
+        menuBtn.setAttribute('aria-expanded', String(open))
+        menuBtn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú')
+      }
+
+      menuBtn.addEventListener('click', () => {
+        setMenu(mobileMenu.classList.contains('hidden'))
+      })
+
+      mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)))
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+          setMenu(false)
+          menuBtn.focus()
+        }
+      })
+
+      /* ---- Scroll-spy de las pestañas ---- */
+      const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav]'))
+      const targets = links
+        .map((l) => document.getElementById(l.dataset.nav!))
+        .filter((el): el is HTMLElement => Boolean(el))
+
+      const setActive = (id: string) => {
+        links.forEach((l) => {
+          const active = l.dataset.nav === id
+          l.setAttribute('aria-current', active ? 'true' : 'false')
+          l.classList.toggle('nav-pill-active', active)
+        })
+      }
+
+      if (targets.length) {
+        const spy = new IntersectionObserver(
+          (entries) => {
+            const visible = entries
+              .filter((e) => e.isIntersecting)
+              .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+            if (visible) setActive(visible.target.id)
+          },
+          { rootMargin: '-20% 0px -55% 0px', threshold: [0, 0.15, 0.4, 0.75] }
+        )
+        targets.forEach((t) => spy.observe(t))
+      }
+
+      /* ---- Brillo que sigue al puntero sobre el vidrio ---- */
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+        document.querySelectorAll<HTMLElement>('.glass, .glass-soft').forEach((el) => {
+          el.classList.add('is-lit')
+          el.addEventListener(
+            'pointermove',
+            (e) => {
+              const r = el.getBoundingClientRect()
+              el.style.setProperty('--mx', `${e.clientX - r.left}px`)
+              el.style.setProperty('--my', `${e.clientY - r.top}px`)
+            },
+            { passive: true }
+          )
+        })
+      }
+
+      /* ---- Revelado al entrar en viewport ---- */
+      const revealEls = document.querySelectorAll<HTMLElement>('.reveal')
+      if (!reduceMotion && revealEls.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible')
+                io.unobserve(e.target)
+              }
+            })
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+        )
+        revealEls.forEach((el) => io.observe(el))
+      } else {
+        revealEls.forEach((el) => el.classList.add('is-visible'))
+      }
+    </script>
+  </body>
+</html>

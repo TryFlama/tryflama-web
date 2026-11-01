@@ -1,0 +1,529 @@
+---
+import Icon from './Icon.astro'
+import type { Review } from '../data/site'
+import { TABS, SERVICES, PROCESS, PROJECTS, EMAIL, DISCORD_URL } from '../data/site'
+
+interface Props {
+  reviews: Review[]
+  rating: number
+  reviewCount: number
+}
+
+const { reviews, rating, reviewCount }: Props = Astro.props
+
+const googleCount = reviews.filter((r) => r.source === 'Google').length
+const trustpilotCount = reviews.length - googleCount
+
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? '')
+    .join('')
+
+const STACK = [
+  'Astro', 'React', 'Next.js', 'TypeScript', 'Node.js', 'Tailwind CSS',
+  'PostgreSQL', 'Redis', 'Docker', 'Cloudflare', 'Discord API', 'Stripe',
+]
+---
+
+<section id="paneles" class="relative scroll-mt-24 px-4 pt-16 sm:px-6 sm:pt-20">
+  <div class="mx-auto max-w-7xl">
+    <!-- Cabecera de la sección -->
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-2xl">
+        <p class="reveal font-display text-sm font-semibold text-flame-400">Explora</p>
+        <h2 class="reveal title-balance mt-2 font-display text-3xl font-bold tracking-tight text-white sm:text-[2.6rem]" style="--reveal-delay:60ms">
+          Todo TryFlama, sin scroll infinito
+        </h2>
+        <p class="reveal mt-3 max-w-xl text-base leading-relaxed text-mist-400" style="--reveal-delay:120ms">
+          Cambia de pestaña para ver servicios, proceso, proyectos, reseñas y contacto.
+        </p>
+      </div>
+
+      <p class="reveal hidden items-center gap-2 text-sm text-mist-500 lg:flex" style="--reveal-delay:160ms">
+        <kbd class="rounded-md border border-white/12 bg-white/5 px-2 py-1 font-sans text-xs text-mist-300">←</kbd>
+        <kbd class="rounded-md border border-white/12 bg-white/5 px-2 py-1 font-sans text-xs text-mist-300">→</kbd>
+        para moverte entre pestañas
+      </p>
+    </div>
+
+    <!-- Barra de pestañas -->
+    <div class="glass reveal mt-8 !rounded-[20px] p-0" style="--reveal-delay:200ms">
+      <div
+        class="tablist"
+        role="tablist"
+        aria-label="Secciones de TryFlama"
+        id="main-tablist"
+      >
+        <span class="tab-indicator" id="tab-indicator" aria-hidden="true"></span>
+        {
+          TABS.map((tab, i) => (
+            <button
+              type="button"
+              class="tab"
+              role="tab"
+              id={`tab-${tab.id}`}
+              aria-controls={`panel-${tab.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              data-tab={tab.id}
+            >
+              <Icon name={tab.icon} class="h-4 w-4" />
+              {tab.label}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <!-- PANEL: SERVICIOS -->
+      <div
+        class="tabpanel"
+        role="tabpanel"
+        id="panel-servicios"
+        aria-labelledby="tab-servicios"
+        tabindex="0"
+      >
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            SERVICES.map((s, i) => (
+              <article class="tile group" style={`--reveal-delay:${i * 50}ms`}>
+                <span class="tile-icon">
+                  <Icon name={i === 0 ? 'web' : i === 1 ? 'bolt' : i === 2 ? 'shield' : i === 3 ? 'discord' : i === 4 ? 'star' : 'clock'} class="h-5 w-5" />
+                </span>
+                <h3 class="mt-4 font-display text-lg font-bold text-white">{s.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-mist-400">{s.desc}</p>
+                <ul class="mt-4 flex flex-wrap gap-1.5">
+                  {s.items.map((item) => (
+                    <li class="rounded-full border border-white/10 bg-white/4 px-2.5 py-1 text-[11px] font-medium text-mist-300">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="marquee mt-8 border-y border-white/8 py-5" aria-hidden="true">
+          <div class="marquee__track">
+            {
+              [...STACK, ...STACK].map((s) => (
+                <span class="whitespace-nowrap font-display text-sm font-semibold tracking-wide text-mist-500">
+                  {s}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: PROCESO -->
+      <div
+        class="tabpanel"
+        role="tabpanel"
+        id="panel-proceso"
+        aria-labelledby="tab-proceso"
+        tabindex="0"
+        hidden
+      >
+        <div class="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+          <div class="glass p-6 sm:p-8">
+            <ol class="space-y-8">
+              {
+                PROCESS.map((step, i) => (
+                  <li class="relative flex gap-5">
+                    {i < PROCESS.length - 1 && <span class="step-line" aria-hidden="true" />}
+                    <span class="step-dot shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                    <div class="pt-1">
+                      <h3 class="font-display text-lg font-bold text-white">{step.title}</h3>
+                      <p class="mt-1.5 max-w-md text-sm leading-relaxed text-mist-400">{step.desc}</p>
+                    </div>
+                  </li>
+                ))
+              }
+            </ol>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <div class="tile flex-1">
+              <h3 class="font-display text-base font-bold text-white">Lo que recibes en cada etapa</h3>
+              <ul class="mt-4 space-y-3">
+                {
+                  [
+                    'Un responsable técnico con nombre y trato directo.',
+                    'Entregas parciales navegables desde la primera semana.',
+                    'Decisiones de diseño documentadas, no improvisadas.',
+                    'Código en tu repositorio desde el día uno.',
+                  ].map((t) => (
+                    <li class="flex gap-3 text-sm leading-relaxed text-mist-300">
+                      <Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-flame-400" />
+                      {t}
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+
+            <div class="tile">
+              <p class="text-xs font-semibold text-flame-300">Tiempo típico</p>
+              <p class="mt-2 font-display text-2xl font-bold text-white">2 a 6 semanas</p>
+              <p class="mt-1.5 text-sm text-mist-400">
+                Para un producto lanzable. Te damos una fecha concreta tras la primera llamada.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: PROYECTOS -->
+      <div
+        class="tabpanel"
+        role="tabpanel"
+        id="panel-proyectos"
+        aria-labelledby="tab-proyectos"
+        tabindex="0"
+        hidden
+      >
+        <div class="grid gap-4 md:grid-cols-3">
+          {
+            PROJECTS.map((p) => (
+              <a
+                href={p.href}
+                target="_blank"
+                rel="noopener"
+                class="tile group block"
+                aria-label={`${p.name} — ${p.category} (se abre en otra pestaña)`}
+              >
+                <div class="flex items-start justify-between gap-3">
+                  <span class="monogram" aria-hidden="true">{p.glyph}</span>
+                  <span class="grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/5 text-mist-400 transition-colors group-hover:border-flame-300/40 group-hover:text-flame-300">
+                    <Icon name="external" class="h-3.5 w-3.5" />
+                  </span>
+                </div>
+                <h3 class="mt-5 font-display text-lg font-bold text-white">{p.name}</h3>
+                <p class="mt-1 text-xs font-semibold text-flame-400">{p.category}</p>
+                <p class="mt-3 text-sm leading-relaxed text-mist-400">{p.desc}</p>
+                <ul class="mt-4 flex flex-wrap gap-1.5">
+                  {p.tags.map((t) => (
+                    <li class="rounded-full border border-white/10 bg-white/4 px-2.5 py-1 text-[11px] font-medium text-mist-300">
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="glass-soft mt-4 flex flex-col items-start justify-between gap-4 p-6 sm:flex-row sm:items-center">
+          <p class="text-sm leading-relaxed text-mist-300">
+            ¿Quieres el siguiente caso de éxito aquí? Empezamos por una llamada de 20 minutos.
+          </p>
+          <a href="#contacto" class="btn-flame shrink-0 !px-5 !py-2.5 !text-sm" data-open-tab="contacto">
+            Hablemos
+          </a>
+        </div>
+      </div>
+
+      <!-- PANEL: RESEÑAS -->
+      <div
+        class="tabpanel"
+        role="tabpanel"
+        id="panel-resenas"
+        aria-labelledby="tab-resenas"
+        tabindex="0"
+        hidden
+      >
+        <div class="glass flex flex-col items-start justify-between gap-6 p-6 sm:flex-row sm:items-center sm:p-8">
+          <div class="flex items-center gap-5">
+            <div class="text-center">
+              <p class="font-display text-4xl font-bold text-white">{rating.toFixed(1)}</p>
+              <p class="mt-1 text-xs font-medium text-mist-400">de 5</p>
+            </div>
+            <div>
+              <p class="flex items-center gap-1.5 text-flame-400" aria-hidden="true">
+                {
+                  Array.from({ length: 5 }).map(() => (
+                    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z" />
+                    </svg>
+                  ))
+                }
+              </p>
+              <p class="mt-2 text-sm text-mist-300">
+                {reviewCount} reseñas publicadas entre Google y Trustpilot
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <a
+              href="https://www.trustpilot.com/review/tryflama.com"
+              target="_blank"
+              rel="noopener"
+              class="btn-glass !px-4 !py-2.5 !text-sm"
+            >
+              Trustpilot
+              <span class="sr-only">(se abre en otra pestaña)</span>
+            </a>
+            <a
+              href="https://www.google.com/maps/place/TryFlama/@18.4894235,-69.8649404,17z"
+              target="_blank"
+              rel="noopener"
+              class="btn-glass !px-4 !py-2.5 !text-sm"
+            >
+              Google
+              <span class="sr-only">(se abre en otra pestaña)</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {
+            reviews.map((r) => (
+              <article class="tile flex flex-col">
+                <div class="flex items-start justify-between gap-2">
+                  <p class="stars" aria-label={`${r.stars} de 5 estrellas`}>
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <svg
+                        class={`h-3.5 w-3.5 ${i < r.stars ? 'text-flame-400' : 'text-white/15'}`}
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.9l-5.3 2.7 1-5.8L1.5 7.7l5.9-.9L10 1.5z" />
+                      </svg>
+                    ))}
+                  </p>
+                  <span class="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-[10px] font-bold text-mist-400">
+                    {r.source}
+                  </span>
+                </div>
+
+                <p class="mt-3 flex-1 text-sm leading-relaxed text-mist-300">“{r.text}”</p>
+
+                {r.reply && (
+                  <div class="mt-4 rounded-xl border border-white/8 bg-black/25 p-3.5">
+                    <p class="text-[11px] font-bold text-flame-300">Respuesta de TryFlama</p>
+                    <p class="mt-1 text-sm leading-relaxed text-mist-300">{r.reply}</p>
+                  </div>
+                )}
+
+                <div class="mt-5 flex items-center gap-3 border-t border-white/8 pt-4">
+                  <span class="avatar" aria-hidden="true">
+                    {initials(r.name)}
+                    {r.photo && (
+                      <img
+                        src={r.photo}
+                        alt=""
+                        width="36"
+                        height="36"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )}
+                  </span>
+                  <div class="min-w-0">
+                    <p class="truncate text-sm font-semibold text-white">{r.name}</p>
+                    <p class="truncate text-xs text-mist-500">
+                      {r.country ? `${r.country} · ` : ''}{r.date}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- PANEL: CONTACTO -->
+      <div
+        class="tabpanel"
+        role="tabpanel"
+        id="panel-contacto"
+        aria-labelledby="tab-contacto"
+        tabindex="0"
+        hidden
+      >
+        <div class="glass relative overflow-hidden p-7 sm:p-12">
+          <div class="pointer-events-none absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-flame-500/25 blur-[90px]" aria-hidden="true"></div>
+
+          <div class="relative mx-auto max-w-2xl text-center">
+            <h3 class="title-balance font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              Hablemos de tu proyecto
+            </h3>
+            <p class="mt-3 text-base leading-relaxed text-mist-300">
+              Cuéntanos qué quieres construir. Respondemos en menos de 24 horas con los
+              siguientes pasos, no con un formulario.
+            </p>
+            <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
+              <a href={`mailto:${EMAIL}`} class="btn-flame">
+                <Icon name="mail" class="h-4 w-4" />
+                Escríbenos
+              </a>
+              <a href={DISCORD_URL} target="_blank" rel="noopener" class="btn-glass">
+                <Icon name="discord" class="h-4 w-4 text-flame-300" />
+                Unirte al Discord
+                <span class="sr-only">(se abre en otra pestaña)</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="relative mt-9 grid gap-3 sm:grid-cols-2">
+            <a href={`mailto:${EMAIL}`} class="glass-soft group flex items-center gap-4 p-5 transition hover:border-flame-400/40">
+              <span class="tile-icon shrink-0">
+                <Icon name="mail" class="h-5 w-5" />
+              </span>
+              <span class="min-w-0">
+                <span class="block font-display text-sm font-bold text-white">Email</span>
+                <span class="mt-0.5 block truncate text-sm text-mist-400">{EMAIL}</span>
+              </span>
+            </a>
+
+            <a href={DISCORD_URL} target="_blank" rel="noopener" class="glass-soft group flex items-center gap-4 p-5 transition hover:border-flame-400/40">
+              <span class="tile-icon shrink-0">
+                <Icon name="discord" class="h-5 w-5" />
+              </span>
+              <span class="min-w-0">
+                <span class="block font-display text-sm font-bold text-white">Discord</span>
+                <span class="mt-0.5 block truncate text-sm text-mist-400">
+                  Comunidad y soporte directo
+                </span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const tablist = document.getElementById('main-tablist') as HTMLElement | null
+  const indicator = document.getElementById('tab-indicator') as HTMLElement | null
+
+  if (tablist && indicator) {
+    const tabs = Array.from(tablist.querySelectorAll<HTMLButtonElement>('[role="tab"]'))
+    const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls')!)!)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const moveIndicator = () => {
+      const selected = tabs.find((t) => t.getAttribute('aria-selected') === 'true')
+      if (!selected) return
+      indicator.style.width = `${selected.offsetWidth}px`
+      indicator.style.transform = `translateX(${selected.offsetLeft}px)`
+    }
+
+    const activate = (id: string, opts: { focus?: boolean; updateUrl?: boolean; scroll?: boolean } = {}) => {
+      const { focus = false, updateUrl = true, scroll = false } = opts
+      const index = tabs.findIndex((t) => t.dataset.tab === id)
+      if (index === -1) return
+
+      tabs.forEach((t, i) => {
+        const isSelected = i === index
+        t.setAttribute('aria-selected', String(isSelected))
+        t.tabIndex = isSelected ? 0 : -1
+      })
+
+      panels.forEach((p, i) => {
+        p.hidden = i !== index
+      })
+
+      /* Cualquier bloque con revelado dentro del panel activo se muestra ya */
+      panels[index]
+        ?.querySelectorAll<HTMLElement>('.reveal')
+        .forEach((el) => el.classList.add('is-visible'))
+
+      moveIndicator()
+
+      if (focus) tabs[index].focus({ preventScroll: true })
+
+      if (updateUrl) {
+        const target = `#${id}`
+        if (window.location.hash !== target) {
+          history.replaceState(null, '', target)
+        }
+      }
+
+      if (scroll) {
+        const card = document.getElementById('paneles')
+        card?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+      }
+    }
+
+    const currentTab = () =>
+      tabs.find((t) => t.getAttribute('aria-selected') === 'true')?.dataset.tab ?? tabs[0].dataset.tab!
+
+    /* Clic en pestaña */
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => activate(tab.dataset.tab!, { focus: true }))
+    })
+
+    /* Teclado: flechas, Home, End */
+    tablist.addEventListener('keydown', (e) => {
+      const idx = tabs.indexOf(document.activeElement as HTMLButtonElement)
+      if (idx === -1) return
+
+      const last = tabs.length - 1
+      let next: number | null = null
+
+      if (e.key === 'ArrowRight') next = idx === last ? 0 : idx + 1
+      else if (e.key === 'ArrowLeft') next = idx === 0 ? last : idx - 1
+      else if (e.key === 'Home') next = 0
+      else if (e.key === 'End') next = last
+
+      if (next !== null) {
+        e.preventDefault()
+        activate(tabs[next].dataset.tab!, { focus: true })
+      }
+    })
+
+    /* Botones que abren una pestaña concreta (CTAs del hero y demás) */
+    document.querySelectorAll<HTMLElement>('[data-open-tab]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault()
+        const id = el.dataset.openTab!
+        const isMobileMenu = el.closest('#mobile-menu')
+        if (isMobileMenu) {
+          const btn = document.getElementById('menu-btn')
+          btn?.click()
+        }
+        activate(id, { updateUrl: true, scroll: true })
+      })
+    })
+
+    /* Enlaces del nav a pestañas */
+    document.querySelectorAll<HTMLAnchorElement>('[data-nav]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault()
+        const id = a.dataset.nav!
+        activate(id, { updateUrl: true })
+        document.getElementById('paneles')?.scrollIntoView({
+          behavior: reduce ? 'auto' : 'smooth',
+          block: 'start',
+        })
+      })
+    })
+
+    /* Estado inicial desde la URL (deep link) */
+    const initial = window.location.hash.replace('#', '')
+    if (initial && tabs.some((t) => t.dataset.tab === initial)) {
+      activate(initial, { updateUrl: false })
+    } else {
+      activate(currentTab(), { updateUrl: false })
+    }
+
+    /* Al cambiar el hash o redimensionar */
+    window.addEventListener('hashchange', () => {
+      const id = window.location.hash.replace('#', '')
+      if (tabs.some((t) => t.dataset.tab === id)) activate(id, { updateUrl: false })
+    })
+    window.addEventListener('resize', moveIndicator, { passive: true })
+    document.fonts?.ready.then(moveIndicator)
+    requestAnimationFrame(moveIndicator)
+  }
+</script>
