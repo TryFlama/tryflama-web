@@ -895,3 +895,135 @@ a:hover > .brand-chip {
 .aurora__blob {
   opacity: 0.7;
 }
+
+/* ------------------------------------------------------------------
+   NAVIDAD: nieve cayendo, decoraciones rojas/verdes/doradas
+   ------------------------------------------------------------------ */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  z-index: 1;
+  user-select: none;
+  cursor: default;
+  width: 1.5rem;
+  height: 1.5rem;
+  animation: snowfall linear forwards;
+  pointer-events: none;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+}
+
+@keyframes snowfall {
+  to {
+    transform: translateY(100vh) translateX(var(--tx, 0)) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.christmas-lights {
+  position: absolute;
+  display: flex;
+  gap: 1rem;
+  opacity: 0.9;
+}
+
+.light {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  animation: twinkle 1s ease-in-out infinite;
+}
+
+.light--red { background: #dc2626; box-shadow: 0 0 8px #dc2626; animation-delay: 0s; }
+.light--green { background: #16a34a; box-shadow: 0 0 8px #16a34a; animation-delay: 0.3s; }
+.light--gold { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; animation-delay: 0.6s; }
+.light--red2 { background: #ef4444; box-shadow: 0 0 8px #ef4444; animation-delay: 0.9s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.holly {
+  display: inline-block;
+  margin: 0 0.25rem;
+  color: #16a34a;
+  font-weight: bold;
+  animation: holly-bounce 2s ease-in-out infinite;
+}
+
+.holly::before { content: '🎄'; }
+
+@keyframes holly-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* ------------------------------------------------------------------
+   MOBILE-FIRST OPTIMIZATIONS
+   ------------------------------------------------------------------ */
+@media (max-width: 640px) {
+  html { font-size: 14px; }
+  
+  .orb-stage {
+    max-width: 20rem;
+    margin-top: 2rem;
+  }
+  
+  .float-card {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.7rem;
+  }
+  
+  .tab {
+    min-height: 44px; /* Mantener tamaño táctil */
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .tile {
+    padding: 1.25rem;
+  }
+  
+  .step-dot {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Header móvil mejorado */
+  #site-header nav {
+    min-height: 64px;
+  }
+  
+  #menu-btn {
+    min-width: 48px;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .orb-stage {
+    display: none;
+  }
+  
+  .tab {
+    flex: 0 1 auto;
+    min-height: 44px;
+    padding: 0.5rem 0.9rem;
+  }
+  
+  .aurora__blob {
+    opacity: 0.35;
+  }
+  
+  .float-card {
+    display: none;
+  }
+  
+  /* Simplificar nieve en móviles muy pequeños */
+  .snowflake {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}

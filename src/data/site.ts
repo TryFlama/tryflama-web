@@ -1,5 +1,4 @@
-// Datos del sitio TryFlama. Editar aquí, no en las páginas.
-
+// Datos actualizados: empresa sin fines de lucro, productos reales
 export interface Review {
   name: string
   stars: number
@@ -11,15 +10,12 @@ export interface Review {
   source: string
 }
 
-/** Reseñas de Trustpilot (fallback si la API no responde en build). */
 export const TRUSTPILOT_REVIEWS: Review[] = [
   { name: 'MATEO LOPEZ ESTEBAN', country: 'MX', stars: 5, date: '14 de agosto de 2026', text: 'Los Femboys son de muy buena calidad' },
   { name: 'Cuenta RBD', country: 'PE', stars: 5, date: '12 de agosto de 2026', text: 'Vengo de parte de Haruuu, muy buena atención dan, muy recomendable' },
   { name: 'Xavier Alberto Ticona', country: 'BO', stars: 5, date: '11 de agosto de 2026', text: 'Recomendable :]' },
   { name: 'Principe Obreke', country: 'CL', stars: 5, date: '11 de agosto de 2026', text: 'Vengo de parte de Haruu' },
   { name: 'Efrain', country: 'AR', stars: 5, date: '10 de agosto de 2026', text: 'Hola, geo, cuando abres el host? XD' },
-  { name: 'Traxet', country: 'EC', stars: 5, date: '6 de junio de 2026', text: 'Muy buen hosting de servidores, no hay lag y el ping es de lo mejor, 100% recomendado y si pueden hagan conocer este gran servicio de hosting (vengo de parte de haru)' },
-  { name: 'Nord', country: 'FR', stars: 5, date: '12 de agosto de 2025', text: 'ñ??? POR QUE TE MIENTES, SI SABES QUE TE GUSTO' },
 ]
 
 export const MESES = [
@@ -34,116 +30,82 @@ export function fmtDate(iso?: string): string {
   return `${d.getUTCDate()} de ${MESES[d.getUTCMonth()]} de ${d.getUTCFullYear()}`
 }
 
-/* ------------------------------------------------------------------ */
-/* Pestañas                                                            */
-/* ------------------------------------------------------------------ */
+/* ================================================================ */
+/* Pestañas                                                         */
+/* ================================================================ */
 
 export interface Tab {
   id: string
   label: string
-  icon: 'web' | 'process' | 'rocket' | 'star' | 'chat'
+  icon: 'zap' | 'sparkles' | 'gift' | 'users' | 'mail'
 }
 
 export const TABS: Tab[] = [
-  { id: 'servicios', label: 'Servicios', icon: 'web' },
-  { id: 'proceso', label: 'Proceso', icon: 'process' },
-  { id: 'proyectos', label: 'Proyectos', icon: 'rocket' },
-  { id: 'resenas', label: 'Reseñas', icon: 'star' },
-  { id: 'contacto', label: 'Contacto', icon: 'chat' },
+  { id: 'productos', label: 'Nuestros Productos', icon: 'zap' },
+  { id: 'mision', label: 'Nuestra Misión', icon: 'sparkles' },
+  { id: 'equipo', label: 'El Equipo', icon: 'users' },
+  { id: 'contacto', label: 'Únete', icon: 'mail' },
 ]
 
-export interface Service {
-  title: string
-  desc: string
-  items: string[]
-}
-
-export const SERVICES: Service[] = [
-  {
-    title: 'Desarrollo Web',
-    desc: 'Sitios y plataformas rápidas, accesibles y escalables que convierten visitas en clientes.',
-    items: ['Landing y marketing', 'E-commerce', 'Portales a medida'],
-  },
-  {
-    title: 'Apps y Productos',
-    desc: 'Productos a medida para web y móvil, con experiencias pulidas de principio a fin.',
-    items: ['MVP en semanas', 'Cross-platform', 'Diseño x código'],
-  },
-  {
-    title: 'Soluciones Fullstack',
-    desc: 'De la base de datos al frontend: arquitecturas completas, seguras y listas para crecer.',
-    items: ['APIs escalables', 'Bases de datos', 'Infraestructura'],
-  },
-  {
-    title: 'Bots e Integraciones',
-    desc: 'Automatizamos tu comunidad y tus operaciones: bots de Discord, integraciones y flujos.',
-    items: ['Bots de Discord', 'Automatización', 'Webhooks y APIs'],
-  },
-  {
-    title: 'Diseño UI/UX',
-    desc: 'Interfaces con identidad propia: sistemas de diseño, prototipos y refinamiento visual.',
-    items: ['Design systems', 'Prototipos', 'Accesibilidad'],
-  },
-  {
-    title: 'Soporte 24/7',
-    desc: 'Tu proyecto nunca se apaga: monitorización, respuesta rápida y mejora continua.',
-    items: ['Monitorización', 'Respuesta rápida', 'Mejora continua'],
-  },
-]
-
-export interface Step {
-  title: string
-  desc: string
-}
-
-export const PROCESS: Step[] = [
-  { title: 'Descubrimiento', desc: 'Analizamos tu idea, objetivos y audiencia para definir la hoja de ruta.' },
-  { title: 'Diseño y desarrollo', desc: 'Diseñamos y construimos con un foco constante en calidad y rendimiento.' },
-  { title: 'Lanzamiento y soporte', desc: 'Desplegamos, supervisamos y acompañamos tu proyecto las 24 horas.' },
-]
-
-export interface Project {
+export interface Product {
+  id: string
   name: string
-  category: string
   desc: string
-  href: string
-  logo?: { src: string; alt: string }
-  glyph: string
-  tags: string[]
+  icon: 'zap' | 'bot' | 'rocket'
+  link?: string
+  comingSoon?: boolean
+  features: string[]
 }
 
-export const PROJECTS: Project[] = [
+export const PRODUCTS: Product[] = [
   {
-    name: 'Susic',
-    category: 'Streaming',
-    desc: 'La plataforma de streaming que conecta artistas y fans.',
-    href: 'susic',
-    glyph: 'S',
-    tags: ['Web', 'Streaming', 'Comunidad'],
+    id: 'ai-api',
+    name: 'AI by TryFlama',
+    desc: 'API de IA ilimitada para desarrolladores y creadores. Acceso gratuito a GPT, Claude, Llama y más modelos sin restricciones.',
+    icon: 'zap',
+    link: 'https://ai.tryflama.com',
+    features: ['Modelos ilimitados', 'Sin rate limits', 'API REST completa', 'Gratis para todos'],
   },
   {
-    name: 'Anna',
-    category: 'Bot de Discord',
-    desc: 'Bot de Discord con IA que revoluciona la gestión de eventos.',
-    href: 'anna',
-    glyph: 'A',
-    tags: ['Discord', 'IA', 'Automation'],
+    id: 'anna',
+    name: 'Anna — Bot de Discord',
+    desc: 'Bot multifunción para Discord. Moderación, eventos, entretenimiento y mucho más para hacer tu servidor mejor.',
+    icon: 'bot',
+    link: 'https://discord.gg/YJ3aueX2Sp',
+    features: ['Multifunción', 'Fácil de configurar', 'Soporte activo', 'Nuevas funciones'],
   },
   {
-    name: 'SkyLoading',
-    category: 'Host de Minecraft',
-    desc: 'Hosting de servidores de Minecraft rápido y confiable.',
-    href: 'skyloading',
-    glyph: 'S',
-    tags: ['Infra', 'Hosting', 'Game servers'],
+    id: 'coming-soon',
+    name: 'Más herramientas próximamente',
+    desc: 'Estamos creando nuevas soluciones para desarrolladores y creadores. Herramientas útiles, sin costos ocultos.',
+    icon: 'rocket',
+    comingSoon: true,
+    features: ['En desarrollo', 'Comunidad primero', 'Código abierto', '2026'],
   },
 ]
 
 export const EMAIL = 'support@tryflama.com'
 export const DISCORD_URL = 'https://discord.gg/YJ3aueX2Sp'
+export const COUNTRY = 'República Dominicana 🇩🇴'
+
+export const MISSION = {
+  title: 'Creamos herramientas para la gente',
+  desc: 'TryFlama es una empresa de República Dominicana que crea webs, apps y soluciones para desarrolladores y usuarios. Sin fines de lucro, sin limitaciones artificiales. Solo herramientas que funcionan.',
+  values: [
+    { emoji: '🎯', title: 'Para todos', desc: 'Herramientas accesibles, sin exclusión ni barreras.' },
+    { emoji: '💚', title: 'Sin fines de lucro', desc: 'Ganancia reinvertida en mejoras y comunidad.' },
+    { emoji: '🔗', title: 'Abierto', desc: 'APIs documentadas, código abierto cuando es posible.' },
+    { emoji: '⚡', title: 'Rápido', desc: 'Infraestructura optimizada para responder al instante.' },
+  ],
+}
+
+export const TEAM = [
+  { name: 'Founder', role: 'Visión y dirección', emoji: '👨‍💼' },
+  { name: 'Comunidad', role: 'Nuestra fuerza real', emoji: '👥' },
+]
 
 export const STAT_LINE = [
-  { value: '3+', label: 'Proyectos estrella' },
-  { value: '24/7', label: 'Soporte dedicado' },
-  { value: '100%', label: 'Compromiso' },
+  { value: '2', label: 'Productos activos', icon: null },
+  { value: '24/7', label: 'Soporte real', icon: null },
+  { value: 'RD', label: 'Desde República Dominicana', icon: 'rd-flag' },
 ]
