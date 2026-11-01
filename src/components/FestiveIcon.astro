@@ -1,0 +1,60 @@
+---
+// Iconos navideños dibujados a mano, mismo trazo que Icon.astro (1.8 stroke).
+// Sin emojis, sin dependencias. Todos decorativos: aria-hidden por defecto.
+interface Props {
+  name: 'snowflake' | 'star' | 'tree' | 'gift' | 'bell' | 'holly' | 'hat' | 'candy'
+  class?: string
+}
+
+const { name, class: cls = 'h-5 w-5' } = Astro.props
+
+const paths: Record<string, string> = {
+  // Copo de nieve: seis brazos con ramas en V
+  snowflake:
+    'M12 2v20M3.34 7l17.32 10M20.66 7 3.34 17' +
+    'M12 6.4 9.9 4.3M12 6.4l2.1-2.1M12 17.6l-2.1 2.1M12 17.6l2.1 2.1' +
+    'M5.3 10.1 2.7 9.7M18.7 13.9l2.6.4M5.3 13.9l-2.6.4M18.7 10.1l2.6-.4',
+  // Estrella de cinco puntas
+  star: 'm12 3 2.62 5.94 6.38.62-4.8 4.28 1.4 6.2L12 16.8 6.4 20.04l1.4-6.2L3 9.56l6.38-.62L12 3Z',
+  // Árbol: tres niveles + tronco
+  tree: 'M12 2.75 8 9h2.5L7 15.5h10L13.5 9H16L12 2.75ZM12 15.5V20M9.75 21.25h4.5',
+  // Regalo: caja, tapa y lazo
+  gift:
+    'M4.75 10.25h14.5v9.5a.5.5 0 0 1-.5.5H5.25a.5.5 0 0 1-.5-.5v-9.5Z' +
+    'M3.75 6.75h16.5v3.5H3.75zM12 6.75v13.5' +
+    'M12 6.75c-1.6 0-3.25-.6-3.25-2.25S10.4 2.25 12 4.5c1.6-2.25 3.25-2.25 3.25 0s-1.65 2.25-3.25 2.25Z',
+  // Campana
+  bell:
+    'M18 8.5a6 6 0 1 0-12 0c0 5.25-2.25 6.75-2.25 6.75h16.5S18 13.75 18 8.5Z' +
+    'M10.3 18.75a2 2 0 0 0 3.4 0',
+  // Acebo: dos hojas y tres bayas
+  holly:
+    'M12 11.5c-1.6-2.4-2.6-4.6-2-6.4.6-1.7 2.4-2.2 4-1.4 1.6.9 2 2.6 1.2 4.2-.5 1-1.6 2-3.2 3.6Z' +
+    'M11.4 11.9c-2.6 1-4.9 1.2-6.3.2-1.4-1-1.2-2.9.1-4.1 1.4-1.2 3.1-1 4.4.3.8.8 1.2 2 1.8 3.6Z' +
+    'M12.5 13.4v.01M10.9 15.1v.01M14.2 15.4v.01',
+  // Gorro de Santa
+  hat: 'M4.5 18.5h15l-1.6-2.2H6.1L4.5 18.5ZM6.1 16.3 12 3.5c2.1 1.4 4.8 5 5.9 12.8',
+  // Caramelo: bastón
+  candy:
+    'M15.75 3.75a4.5 4.5 0 0 0-4.5 4.5v11.25a2.25 2.25 0 0 1-4.5 0' +
+    'M15.75 3.75a4.5 4.5 0 0 1 4.5 4.5M9 12h6.75M9 15h6.75',
+}
+---
+
+<svg
+  class={cls}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {name === 'bell' ? (
+    <><path d={paths.bell} /><path d="M12 3v-.5" /></>
+  ) : (
+    <path d={paths[name] ?? ''} />
+  )}
+</svg>

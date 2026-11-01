@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css'
 import Icon from '../components/Icon.astro'
-import ChristmasIcon from '../components/ChristmasIcon.astro'
+import FestiveIcon from '../components/FestiveIcon.astro'
 import { TABS, EMAIL, DISCORD_URL } from '../data/site'
 
 interface Props {
@@ -10,8 +10,8 @@ interface Props {
 }
 
 const {
-  title = 'TryFlama — Webs y Apps desde República Dominicana',
-  description = 'TryFlama crea webs, aplicaciones y herramientas digitales. Empresa dominicana sin fines de lucro. Desarrollamos soluciones para gente real.',
+  title = 'TryFlama — Productos para lo que la gente usa',
+  description = 'TryFlama es una empresa sin fines de lucro de República Dominicana. Creamos webs, APIs de IA y herramientas que la gente usa de verdad.',
 } = Astro.props
 ---
 
@@ -39,18 +39,18 @@ const {
       rel="stylesheet"
     />
 
-    <!-- Tema oscuro forzado: no hay modo claro que mantenga el contraste del material -->
     <meta name="color-scheme" content="dark" />
   </head>
 
   <body class="relative min-h-screen overflow-x-hidden font-sans antialiased">
-    <!-- Capa de fondo: aurora líquida + rejilla + grano -->
     <div class="aurora" aria-hidden="true">
       <span class="aurora__blob aurora__blob--a"></span>
       <span class="aurora__blob aurora__blob--b"></span>
       <span class="aurora__blob aurora__blob--c"></span>
     </div>
     <div class="grain" aria-hidden="true"></div>
+
+    <canvas id="snow-canvas" class="festive" aria-hidden="true"></canvas>
 
     <div class="read-progress" id="read-progress" aria-hidden="true"></div>
 
@@ -61,15 +61,26 @@ const {
     >
 
     <header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300">
-      <!-- Luces navideñas -->
-      <div class="christmas-lights" style="top: 8px; left: 20px;" aria-hidden="true">
-        <span class="light light--red"></span>
-        <span class="light light--green"></span>
-        <span class="light light--gold"></span>
-        <span class="light light--red2"></span>
-        <span class="light light--green"></span>
+      <!-- Guirnalda navideña (decorativa) -->
+      <div class="garland festive" aria-hidden="true">
+        <svg viewBox="0 0 1440 22" preserveAspectRatio="none" fill="none">
+          <path d="M0 4 Q 360 20 720 10 T 1440 6" stroke="rgba(255,255,255,0.10)" stroke-width="1" />
+          {
+            Array.from({ length: 24 }).map((_, i) => {
+              const x = (i + 0.5) * 60
+              const colors = ['#ff1e3c', '#4ade80', '#ffab40']
+              const c = colors[i % 3]
+              return (
+                <g class="bulb" style={`animation-delay:${(i % 7) * 0.32}s; color:${c}`}>
+                  <line x1={x} y1="6" x2={x} y2="12" stroke={c} stroke-opacity="0.35" />
+                  <circle cx={x} cy="15" r="2.6" fill={c} />
+                </g>
+              )
+            })
+          }
+        </svg>
       </div>
-      
+
       <div class="mx-auto max-w-7xl px-4 sm:px-6">
         <nav
           class="mt-3 flex h-16 items-center justify-between rounded-2xl px-3 transition-all duration-300 sm:px-4"
@@ -78,9 +89,7 @@ const {
         >
           <!-- Marca -->
           <a href="#inicio" class="group flex shrink-0 items-center gap-2.5 rounded-xl px-1.5 py-1">
-            <span
-              class="brand-chip relative grid h-10 w-10 place-items-center rounded-[13px]"
-            >
+            <span class="brand-chip relative grid h-10 w-10 place-items-center rounded-[13px]">
               <img
                 src="/logos/tryflama.webp"
                 alt=""
@@ -94,7 +103,7 @@ const {
             </span>
           </a>
 
-          <!-- Pestañas de escritorio (ancla a los paneles, con scroll-spy) -->
+          <!-- Pestañas de escritorio -->
           <div class="hidden items-center gap-1 lg:flex" id="nav-tabs">
             {
               TABS.map((tab) => (
@@ -110,6 +119,18 @@ const {
           </div>
 
           <div class="flex shrink-0 items-center gap-2">
+            <button
+              id="festive-toggle"
+              type="button"
+              class="relative grid h-11 w-11 place-items-center rounded-xl border border-white/12 opacity-40 transition hover:border-flame-400/50 hover:bg-white/10 hover:opacity-100 aria-pressed:border-flame-400/45"
+              aria-pressed="true"
+              aria-label="Desactivar modo Navidad"
+              title="Modo Navidad"
+            >
+              <FestiveIcon name="snowflake" class="h-5 w-5" />
+              <span class="festive-glow" aria-hidden="true"></span>
+            </button>
+
             <a href="#contacto" class="btn-flame hidden sm:inline-flex !px-5 !py-2.5 !text-sm">
               Únete
             </a>
@@ -174,17 +195,12 @@ const {
             </span>
           </a>
 
-          <p class="text-center text-sm text-mist-400 flex items-center justify-center gap-2">
-            <ChristmasIcon name="tree" class="h-4 w-4" />
-            Desarrollo web · Apps · Desde República Dominicana
-            <ChristmasIcon name="rd-flag" class="h-4 w-4" />
+          <p class="text-center text-sm text-mist-400">
+            Desarrollo web · APIs · Apps · <span class="text-flame-300">República Dominicana</span>
           </p>
 
           <div class="flex items-center gap-3">
-            <a
-              href={`mailto:${EMAIL}`}
-              class="rounded-xl px-3 py-2 text-sm font-semibold text-flame-300 transition hover:text-flame-200"
-            >
+            <a href={`mailto:${EMAIL}`} class="rounded-xl px-3 py-2 text-sm font-semibold text-flame-300 transition hover:text-flame-200">
               Contacto
             </a>
             <a
@@ -201,12 +217,13 @@ const {
         </div>
 
         <div class="mt-10 flex flex-col items-center gap-2 border-t border-white/8 pt-8 text-center">
-          <p class="text-sm text-mist-500 flex items-center gap-2">
-            <ChristmasIcon name="tree" class="h-4 w-4" />
-            © 2026 TryFlama. Felices fiestas desde República Dominicana.
+          <p class="text-sm text-mist-500">© 2026 TryFlama. Empresa sin fines de lucro.</p>
+          <p class="festive-note festive text-xs">
+            <FestiveIcon name="tree" class="h-3.5 w-3.5" />
+            Felices fiestas desde República Dominicana
           </p>
           <p class="text-xs text-mist-500">
-            Empresa sin fines de lucro. Creamos herramientas para la gente.
+            Hecho con foco en rendimiento y accesibilidad.
           </p>
         </div>
       </div>
@@ -301,6 +318,129 @@ const {
           )
         })
       }
+
+      /* ---- Modo Navidad: nieve + interruptor persistente ---- */
+      const FESTIVE_KEY = 'tryflama-festive'
+      const festiveToggle = document.getElementById('festive-toggle') as HTMLButtonElement | null
+      const snowCanvas = document.getElementById('snow-canvas') as HTMLCanvasElement | null
+
+      const readFestive = (): boolean => {
+        try {
+          const saved = localStorage.getItem(FESTIVE_KEY)
+          return saved === null ? true : saved === 'on'
+        } catch {
+          return true
+        }
+      }
+
+      const setFestive = (on: boolean, persist = true) => {
+        document.documentElement.classList.toggle('festive-on', on)
+        if (persist) {
+          try {
+            localStorage.setItem(FESTIVE_KEY, on ? 'on' : 'off')
+          } catch {}
+        }
+        festiveToggle?.setAttribute('aria-pressed', String(on))
+        festiveToggle?.setAttribute(
+          'aria-label',
+          on ? 'Desactivar modo Navidad' : 'Activar modo Navidad'
+        )
+        snowCanvas?.setAttribute('data-active', String(on))
+      }
+
+      setFestive(readFestive(), false)
+
+      festiveToggle?.addEventListener('click', () => {
+        const on = !document.documentElement.classList.contains('festive-on')
+        setFestive(on)
+        // Reanuda la nieve si estaba pausada
+        if (on) startSnow()
+      })
+
+      /* ---- Nieve: copos en canvas (ligero, sin DOM por copo) ---- */
+      let snowRaf = 0
+      let snowStarted = false
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+      const startSnow = () => {
+        if (!snowCanvas || snowStarted || prefersReduced) return
+        const ctx = snowCanvas.getContext('2d')
+        if (!ctx) return
+
+        snowStarted = true
+        const dpr = Math.min(window.devicePixelRatio || 1, 2)
+        const flakes: { x: number; y: number; r: number; vy: number; vx: number; a: number; sway: number }[] = []
+
+        const resize = () => {
+          const w = window.innerWidth
+          const h = window.innerHeight
+          snowCanvas.width = w * dpr
+          snowCanvas.height = h * dpr
+          snowCanvas.style.width = `${w}px`
+          snowCanvas.style.height = `${h}px`
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+
+          // Densidad moderada y adaptada al ancho
+          const target = Math.round(Math.min(110, Math.max(28, w / 14)))
+          flakes.length = 0
+          for (let i = 0; i < target; i++) {
+            flakes.push({
+              x: Math.random() * w,
+              y: Math.random() * h,
+              r: Math.random() * 1.9 + 0.7,
+              vy: Math.random() * 0.45 + 0.22,
+              vx: (Math.random() - 0.5) * 0.28,
+              a: Math.random() * 0.5 + 0.28,
+              sway: Math.random() * Math.PI * 2,
+            })
+          }
+        }
+
+        resize()
+        window.addEventListener('resize', resize, { passive: true })
+
+        let t = 0
+        const frame = () => {
+          if (!document.documentElement.classList.contains('festive-on')) {
+            snowRaf = 0
+            snowStarted = false
+            return
+          }
+          t += 0.012
+          ctx.clearRect(0, 0, snowCanvas.width / dpr, snowCanvas.height / dpr)
+          for (const f of flakes) {
+            f.y += f.vy
+            f.x += f.vx + Math.sin(t + f.sway) * 0.22
+
+            if (f.y - f.r > window.innerHeight) {
+              f.y = -f.r
+              f.x = Math.random() * window.innerWidth
+            }
+            if (f.x < -6) f.x = window.innerWidth + 6
+            if (f.x > window.innerWidth + 6) f.x = -6
+
+            ctx.beginPath()
+            ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2)
+            ctx.fillStyle = `rgba(255, 255, 255, ${f.a})`
+            ctx.fill()
+          }
+          snowRaf = requestAnimationFrame(frame)
+        }
+        snowRaf = requestAnimationFrame(frame)
+      }
+
+      startSnow()
+
+      // Pausa la animación cuando la pestaña no está visible (ahorro de batería)
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && snowRaf) {
+          cancelAnimationFrame(snowRaf)
+          snowRaf = 0
+          snowStarted = false
+        } else if (!document.hidden) {
+          startSnow()
+        }
+      })
 
       /* ---- Revelado al entrar en viewport ---- */
       const revealEls = document.querySelectorAll<HTMLElement>('.reveal')

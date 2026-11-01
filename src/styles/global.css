@@ -889,74 +889,41 @@ a:hover > .brand-chip {
 }
 
 /* ------------------------------------------------------------------
-   Refuerzo del fondo detrás de los paneles: más color para que el
-   vidrio tenga algo que refractar.
+   Efectos de partículas (chispas sutiles, sin navidad)
    ------------------------------------------------------------------ */
-.aurora__blob {
-  opacity: 0.7;
-}
-
-/* ------------------------------------------------------------------
-   NAVIDAD: nieve cayendo, decoraciones rojas/verdes/doradas
-   ------------------------------------------------------------------ */
-.snowflake {
+.sparkle {
   position: fixed;
-  top: -10px;
+  top: 0;
+  left: var(--left);
   z-index: 1;
   user-select: none;
-  cursor: default;
-  width: 1.5rem;
-  height: 1.5rem;
-  animation: snowfall linear forwards;
   pointer-events: none;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+  color: var(--sparkle-color, #ff5c72);
+  font-weight: 700;
+  transform-origin: center;
+  filter: drop-shadow(0 0 6px currentColor);
 }
 
-@keyframes snowfall {
-  to {
-    transform: translateY(100vh) translateX(var(--tx, 0)) rotate(360deg);
+.sparkle::before {
+  content: attr(data-char) '*' '+' '✱';
+}
+
+@keyframes sparkle-rise {
+  0% {
     opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  10% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-160vh) translateX(var(--tx, 0)) scale(0.7);
   }
 }
 
-.christmas-lights {
-  position: absolute;
-  display: flex;
-  gap: 1rem;
-  opacity: 0.9;
-}
-
-.light {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  animation: twinkle 1s ease-in-out infinite;
-}
-
-.light--red { background: #dc2626; box-shadow: 0 0 8px #dc2626; animation-delay: 0s; }
-.light--green { background: #16a34a; box-shadow: 0 0 8px #16a34a; animation-delay: 0.3s; }
-.light--gold { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; animation-delay: 0.6s; }
-.light--red2 { background: #ef4444; box-shadow: 0 0 8px #ef4444; animation-delay: 0.9s; }
-
-@keyframes twinkle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.8); }
-}
-
-.holly {
-  display: inline-block;
-  margin: 0 0.25rem;
-  color: #16a34a;
-  font-weight: bold;
-  animation: holly-bounce 2s ease-in-out infinite;
-}
-
-.holly::before { content: '🎄'; }
-
-@keyframes holly-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+.sparkle {
+  animation: sparkle-rise var(--duration, 10s) linear forwards;
 }
 
 /* ------------------------------------------------------------------
@@ -1026,4 +993,236 @@ a:hover > .brand-chip {
     width: 1.2rem;
     height: 1.2rem;
   }
+}
+
+/* ------------------------------------------------------------------
+   Nav condensado: el vidrio sobre la aurora se saturaba de rojo y
+   perdía legibilidad. Base oscura propia y saturación controlada.
+   ------------------------------------------------------------------ */
+#nav-shell.glass {
+  background:
+    linear-gradient(
+      158deg,
+      rgba(24, 21, 26, 0.86) 0%,
+      rgba(14, 12, 16, 0.9) 55%,
+      rgba(32, 12, 18, 0.88) 100%
+    );
+  border-color: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(20px) saturate(120%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    0 18px 40px -24px rgba(0, 0, 0, 0.95);
+}
+
+#nav-shell.glass::before {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.02) 40%,
+    rgba(255, 92, 114, 0.22) 100%
+  );
+}
+
+/* ------------------------------------------------------------------
+   Textura fina de la tarjeta de producto destacada
+   ------------------------------------------------------------------ */
+.tile--featured {
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(255, 30, 60, 0.16), transparent 55%),
+    linear-gradient(168deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02) 60%);
+  border-color: rgba(255, 92, 114, 0.22);
+}
+
+/* ------------------------------------------------------------------
+   Pestañas en móvil: las etiquetas SIEMPRE visibles y la barra
+   desplazable en horizontal (antes quedaban sólo iconos, sin contexto).
+   ------------------------------------------------------------------ */
+.tab__label {
+  display: inline;
+}
+
+@media (max-width: 639px) {
+  .tablist {
+    padding: 0.3rem;
+    gap: 0.15rem;
+    scroll-snap-type: x proximity;
+  }
+
+  .tab {
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.78125rem;
+    gap: 0.3rem;
+    scroll-snap-align: center;
+  }
+
+  .tab__label {
+    letter-spacing: -0.01em;
+  }
+
+  .tab-indicator {
+    display: none;
+  }
+
+  .tab[aria-selected="true"] {
+    background: linear-gradient(180deg, rgba(255, 92, 114, 0.34), rgba(255, 30, 60, 0.2));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    border: 1px solid rgba(255, 130, 150, 0.4);
+  }
+
+  .tab {
+    border: 1px solid transparent;
+  }
+}
+
+
+/* Degradado lateral: indica que la barra de pestañas se puede deslizar */
+@media (max-width: 639px) {
+  .glass:has(> .tablist) {
+    position: relative;
+  }
+
+  .glass:has(> .tablist)::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2.25rem;
+    border-radius: 0 20px 20px 0;
+    background: linear-gradient(90deg, transparent, rgba(12, 10, 14, 0.92));
+    pointer-events: none;
+  }
+}
+
+/* ==================================================================
+   MODO NAVIDAD — activado con html.festive-on (por defecto ON)
+   Elementos con clase .festive: ocultos si el usuario lo desactiva.
+   ================================================================== */
+
+/* Escarcha sutil en el borde de los paneles de vidrio */
+.festive-on .glass::before {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.05) 22%,
+    rgba(255, 30, 60, 0.4) 50%,
+    rgba(255, 171, 64, 0.3) 72%,
+    rgba(255, 255, 255, 0.35) 100%
+  );
+}
+
+html:not(.festive-on) .festive {
+  display: none !important;
+}
+
+/* ------------------------------------------------------------------
+   Capa de nieve (canvas)
+   ------------------------------------------------------------------ */
+#snow-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+/* ------------------------------------------------------------------
+   Guirnalda de luces sobre el header
+   ------------------------------------------------------------------ */
+.garland {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 22px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.garland svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.garland .bulb {
+  animation: bulb-twinkle 2.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes bulb-twinkle {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 3px currentColor); }
+  50% { opacity: 0.45; filter: drop-shadow(0 0 1px currentColor); }
+}
+
+/* Botón del toggle: siempre visible; resaltado solo con el modo activo */
+#festive-toggle {
+  position: relative;
+}
+
+#festive-toggle[aria-pressed="true"] {
+  opacity: 1;
+  color: var(--color-flame-200);
+  border-color: rgba(255, 130, 150, 0.40);
+  background: rgba(255, 30, 60, 0.10);
+}
+
+#festive-toggle[aria-pressed="true"] .festive-glow {
+  opacity: 1;
+}
+
+.festive-glow {
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  box-shadow:
+    0 0 14px 2px rgba(255, 171, 64, 0.35),
+    inset 0 0 6px rgba(255, 171, 64, 0.2);
+  opacity: 0;
+  transition: opacity 260ms ease;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------
+   Acentos festivos en el contenido
+   ------------------------------------------------------------------ */
+.festive-accent {
+  color: #ffab40; /* dorado */
+}
+
+.festive-accent-alt {
+  color: #4ade80; /* verde pino suave */
+}
+
+/* Firma navideña en el footer */
+.festive-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 171, 64, 0.85);
+}
+
+.festive-note svg {
+  color: #4ade80;
+}
+
+/* ------------------------------------------------------------------
+   Reduced motion: sin nieve animada ni parpadeo
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  #snow-canvas {
+    display: none;
+  }
+
+  .garland .bulb {
+    animation: none;
+  }
+}
+
+/* Cuando el usuario desactiva el modo festivo, el canvas fuera */
+html:not(.festive-on) #snow-canvas {
+  display: none;
 }
