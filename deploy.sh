@@ -17,7 +17,7 @@ echo "[deploy] build..."
 pnpm build
 
 echo "[deploy] permisos..."
-chmod -R a+rX "$APP_DIR/dist"
+sudo chmod -R a+rX "$APP_DIR/dist"
 
 echo "[deploy] reload nginx..."
 sudo /usr/sbin/nginx -t
